@@ -5,7 +5,7 @@
 # https://www.pollens.fr/generated/vigilance_map.png
 
 # -------------------------------------------------------------------------------------------
-# TÃ©lÃ©chargement images sur le WEB
+# Téléchargement images sur le WEB
 
 from IPython.display import clear_output
 import time
