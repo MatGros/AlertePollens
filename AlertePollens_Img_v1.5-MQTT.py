@@ -176,7 +176,7 @@ while True:
     
     # print(cpt , time.time() )
     
-    sleepTime = 3600
+    sleepTime = 10
     print(datetime.now())
     print("Sleep time :" , sleepTime ,"s") 
     print()
