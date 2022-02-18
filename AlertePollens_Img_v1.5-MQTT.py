@@ -1,5 +1,5 @@
 # Web Scraping img + reconnaissance couleur
-# CUPRESSACÃ‰ES 2022
+# CUPRESSACÉES 2022
 # https://www.pollens.fr/uploads/historic/2022/cypres.png
 # CARTE DE VIGILANCE DES POLLENS
 # https://www.pollens.fr/generated/vigilance_map.png
