@@ -1,19 +1,22 @@
 # Web Scraping img + reconnaissance couleur
-# CUPRESSACÉES 2022
+# CUPRESSACÃ‰ES 2022
 # https://www.pollens.fr/uploads/historic/2022/cypres.png
 # CARTE DE VIGILANCE DES POLLENS
 # https://www.pollens.fr/generated/vigilance_map.png
 
 # -------------------------------------------------------------------------------------------
-# Téléchargement images sur le WEB
+# Télégarchement images sur le WEB
 
 from IPython.display import clear_output
 import time
 from datetime import datetime
 import requests
+import math
+
+cpt = 0
 
 # debugMode
-debugMode = 1;
+debugMode = 0;
 
 
 while True:  
@@ -150,7 +153,7 @@ while True:
     port=1883
     
     def on_publish(client,userdata,result):             #create function for callback
-        #print("Data published OK")
+        print("Data published ", result)
         pass
     
     client1= paho.Client("control1")                           #create client object
@@ -161,13 +164,13 @@ while True:
     # AlertePollens_VigilPollensGardCouleur (eviter _)
     ret= client1.publish("AP/VPC",Vigil_Gard_CouleurAlerte)                   #publish
     # AlertePollens_VigilPollensGardNiveau (eviter _)
-    ret= client1.publish("AP/VPN",Vigil_Gard_NiveauAlerte)                   #publish
+    ret= client1.publish("AP/VPN",Vigil_Gard_NiveauAlerte, qos=1, retain=True)                   #publish
     ret= client1.publish("AP/VPCrgb",Vigil_Gard_CouleurAlerteRGB) 
     
-    #AlertePollens/CyprÃ¨sGard_Couleur
+    #AlertePollens/Cyprés sGard_Couleur
     ret= client1.publish("AP/CGC",Cypres_Gard_CouleurAlerte)                   #publish
     #AlertePollens/CyprÃ¨sGardNiveau
-    ret= client1.publish("AP/CGN",Cypres_Gard_NiveauAlerte)                   #publish
+    ret= client1.publish("AP/CGN",Cypres_Gard_NiveauAlerte, qos=1, retain=True)                   #publish
     ret= client1.publish("AP/CGCrgb",Cypres_Gard_CouleurAlerteRGB) 
     
 
@@ -176,8 +179,15 @@ while True:
     
     # print(cpt , time.time() )
     
+    datetimeNow = str(datetime.now())
+    ret= client1.publish("AP/datetime", datetimeNow, qos=1, retain=True )
+    
+    # Signal générator test
+    ret= client1.publish("AP/cpt", math.sin(cpt), qos=1, retain=True ) 
+    cpt = cpt + 1
+    
+    print(datetimeNow)
     sleepTime = 10
-    print(datetime.now())
     print("Sleep time :" , sleepTime ,"s") 
     print()
     time.sleep(sleepTime)
