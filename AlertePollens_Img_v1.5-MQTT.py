@@ -127,8 +127,8 @@ while True:
     
     # Lecture de la couleur du pixel
     # 1000 1100
-    # ReadPix_X = 270
-    # ReadPix_Y = 300
+    # ReadPix_X = 300
+    # ReadPix_Y = 330
     ReadPix_X = 300
     ReadPix_Y = 330
     ColorPixelRGB = img.getpixel((ReadPix_X,ReadPix_Y))
@@ -201,4 +201,4 @@ while True:
     # Clear print Jupyter
     clear_output(wait=True)
     
-    
+   
