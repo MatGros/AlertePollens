@@ -4,6 +4,9 @@
 # CARTE DE VIGILANCE DES POLLENS
 # https://www.pollens.fr/generated/vigilance_map.png
 
+# pip install pillow
+# pip install paho-mqtt
+
 # -------------------------------------------------------------------------------------------
 # Télégarchement images sur le WEB
 
@@ -16,7 +19,7 @@ import math
 cpt = 0
 
 # debugMode
-debugMode = 0;
+debugMode = 1;
 
 
 while True:  
@@ -56,7 +59,7 @@ while True:
         else:
             Couleur = "?"   
             Niveau = "NUL"
-            CouleurRGB = [255, 255, 255]
+            CouleurRGB = [R, G, B]
             
         return Couleur, Niveau, CouleurRGB
     
@@ -114,6 +117,8 @@ while True:
     
     # Ouverture image
     img = Image.open("cypres.png").convert('RGB')
+    size = (470,470)
+    img.thumbnail(size)
     # img.show()
     if debugMode :
         print(img.format, img.size, img.mode)
@@ -124,8 +129,8 @@ while True:
     # 1000 1100
     # ReadPix_X = 270
     # ReadPix_Y = 300
-    ReadPix_X = 270
-    ReadPix_Y = 300
+    ReadPix_X = 300
+    ReadPix_Y = 330
     ColorPixelRGB = img.getpixel((ReadPix_X,ReadPix_Y))
     # Couleur utilisÃ©e sur le site
     # vert = (0, 128, 0, 255)
@@ -183,7 +188,9 @@ while True:
     ret= client1.publish("AP/datetime", datetimeNow, qos=1, retain=True )
     
     # Signal générator test
-    ret= client1.publish("AP/cpt", math.sin(cpt), qos=1, retain=True ) 
+    mathCpt = math.sin(cpt)
+    print("cpt :" , mathCpt ) 
+    ret= client1.publish("AP/math", mathCpt , qos=1, retain=True ) 
     cpt = cpt + 1
     
     print(datetimeNow)
@@ -193,6 +200,5 @@ while True:
     time.sleep(sleepTime)
     # Clear print Jupyter
     clear_output(wait=True)
-    
     
     
