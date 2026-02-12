@@ -52,19 +52,46 @@ pip install -r requirements.txt
 
 ### Paramètres à personnaliser
 
-Éditez le fichier `AlertePollens_Img_v1.5-MQTT.py` :
-
 #### 1. Configuration MQTT
 
-```python
-broker = "192.168.1.42"  # Adresse IP de votre broker MQTT
-port = 1883              # Port MQTT (1883 par défaut)
-client1.username_pw_set("admin", password="147258")  # Identifiants MQTT
+**⚠️ IMPORTANT - Sécurité**: Ne jamais mettre de mots de passe ou identifiants directement dans le code !
+
+Utilisez des variables d'environnement pour configurer le broker MQTT :
+
+**Option A - Variables d'environnement directes** :
+
+```bash
+export MQTT_BROKER="192.168.1.42"  # Adresse IP de votre broker MQTT
+export MQTT_PORT="1883"             # Port MQTT (1883 par défaut)
+export MQTT_USERNAME="admin"        # Nom d'utilisateur MQTT
+export MQTT_PASSWORD="votre_mot_de_passe"  # Mot de passe MQTT
 ```
+
+**Option B - Fichier .env (recommandé)** :
+
+1. Copiez le fichier d'exemple :
+```bash
+cp .env.example .env
+```
+
+2. Éditez `.env` avec vos identifiants réels :
+```bash
+MQTT_BROKER=192.168.1.42
+MQTT_PORT=1883
+MQTT_USERNAME=admin
+MQTT_PASSWORD=votre_mot_de_passe
+```
+
+3. Chargez les variables et lancez le script :
+```bash
+export $(cat .env | xargs) && python AlertePollens_Img_v1.5-MQTT.py
+```
+
+**Note**: Le fichier `.env` est automatiquement ignoré par Git pour protéger vos identifiants.
 
 #### 2. Position géographique
 
-Ajustez les coordonnées pixel pour votre département :
+Ajustez les coordonnées pixel pour votre département en éditant le fichier `AlertePollens_Img_v1.5-MQTT.py` :
 
 ```python
 ReadPix_X = 300  # Coordonnée X du pixel à analyser
@@ -73,11 +100,15 @@ ReadPix_Y = 330  # Coordonnée Y du pixel à analyser
 
 #### 3. Intervalle de rafraîchissement
 
+Éditez le fichier `AlertePollens_Img_v1.5-MQTT.py` pour ajuster l'intervalle :
+
 ```python
 sleepTime = 10  # Temps en secondes entre chaque vérification
 ```
 
 #### 4. Mode debug
+
+Éditez le fichier `AlertePollens_Img_v1.5-MQTT.py` pour activer/désactiver le mode debug :
 
 ```python
 debugMode = 1  # 1 = activé, 0 = désactivé
@@ -140,6 +171,29 @@ After=network.target
 Type=simple
 User=votre_utilisateur
 WorkingDirectory=/chemin/vers/AlertePollens
+Environment="MQTT_BROKER=192.168.1.42"
+Environment="MQTT_PORT=1883"
+Environment="MQTT_USERNAME=admin"
+Environment="MQTT_PASSWORD=votre_mot_de_passe"
+ExecStart=/usr/bin/python3 AlertePollens_Img_v1.5-MQTT.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Ou pour charger depuis un fichier `.env` :
+
+```ini
+[Unit]
+Description=Alerte Pollens Monitor
+After=network.target
+
+[Service]
+Type=simple
+User=votre_utilisateur
+WorkingDirectory=/chemin/vers/AlertePollens
+EnvironmentFile=/chemin/vers/AlertePollens/.env
 ExecStart=/usr/bin/python3 AlertePollens_Img_v1.5-MQTT.py
 Restart=always
 
@@ -196,6 +250,30 @@ Utilisez le plugin MQTT pour créer des équipements avec les topics ci-dessus.
    - RGB(200+, 200+, 0-60) → Jaune/MOYEN
    - RGB(200+, 0-60, 0-60) → Rouge/ÉLEVÉ
 5. **Publication** : Envoi des données vers le broker MQTT
+
+## 🔒 Sécurité
+
+### Bonnes pratiques
+
+- ⚠️ **Ne jamais commiter de mots de passe ou clés API** dans le dépôt Git
+- ✅ Utilisez des variables d'environnement pour toutes les informations sensibles
+- ✅ Ajoutez `.env` dans `.gitignore` pour éviter les commits accidentels
+- ✅ Utilisez des mots de passe forts pour votre broker MQTT
+- ✅ Limitez l'accès réseau au broker MQTT (firewall, VPN, etc.)
+- ✅ Changez les mots de passe par défaut de tous les services
+
+### Configuration sécurisée
+
+Créez un fichier `.env` (non commité) contenant vos identifiants :
+
+```bash
+MQTT_BROKER=votre_broker_ip
+MQTT_PORT=1883
+MQTT_USERNAME=votre_username
+MQTT_PASSWORD=votre_password_securise
+```
+
+Le script chargera automatiquement ces variables d'environnement.
 
 ## 📝 Notes
 
