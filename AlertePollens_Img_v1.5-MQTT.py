@@ -15,7 +15,6 @@ import time
 from datetime import datetime
 import requests
 import math
-import os
 
 cpt = 0
 
@@ -155,19 +154,15 @@ while True:
     # Diffusion des donnÃ©es via MQTT et le broker local sur serveur Unraid
     
     import paho.mqtt.client as paho
-    # Load MQTT configuration from environment variables
-    broker = os.getenv("MQTT_BROKER", "localhost")
-    port = int(os.getenv("MQTT_PORT", "1883"))
-    mqtt_username = os.getenv("MQTT_USERNAME", "")
-    mqtt_password = os.getenv("MQTT_PASSWORD", "")
+    broker="192.168.1.42"
+    port=1883
     
     def on_publish(client,userdata,result):             #create function for callback
         print("Data published ", result)
         pass
     
     client1= paho.Client("control1")                           #create client object
-    if mqtt_username and mqtt_password:
-        client1.username_pw_set(mqtt_username, password=mqtt_password)
+    client1.username_pw_set("admin", "")
     client1.on_publish = on_publish                          #assign function to callback
     client1.connect(broker,port)                                 #establish connection
     
