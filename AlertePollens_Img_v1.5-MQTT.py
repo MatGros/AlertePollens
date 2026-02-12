@@ -162,7 +162,7 @@ while True:
         pass
     
     client1= paho.Client("control1")                           #create client object
-    client1.username_pw_set("admin", password="147258")  # if password_file /mosquitto/config/passwd
+    client1.username_pw_set("admin", "")
     client1.on_publish = on_publish                          #assign function to callback
     client1.connect(broker,port)                                 #establish connection
     

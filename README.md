@@ -59,7 +59,7 @@ pip install -r requirements.txt
 ```python
 broker = "192.168.1.42"  # Adresse IP de votre broker MQTT
 port = 1883              # Port MQTT (1883 par défaut)
-client1.username_pw_set("admin", password="147258")  # Identifiants MQTT
+client1.username_pw_set("admin", "")  # Identifiants MQTT (mot de passe vide par défaut)
 ```
 
 #### 2. Position géographique
