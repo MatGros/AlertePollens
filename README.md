@@ -61,10 +61,10 @@ Utilisez des variables d'environnement pour configurer le broker MQTT :
 **Option A - Variables d'environnement directes** :
 
 ```bash
-export MQTT_BROKER="192.168.1.42"  # Adresse IP de votre broker MQTT
-export MQTT_PORT="1883"             # Port MQTT (1883 par défaut)
-export MQTT_USERNAME="admin"        # Nom d'utilisateur MQTT
-export MQTT_PASSWORD="votre_mot_de_passe"  # Mot de passe MQTT
+export MQTT_BROKER="your.broker.ip"     # Adresse IP de votre broker MQTT
+export MQTT_PORT="1883"                  # Port MQTT (1883 par défaut)
+export MQTT_USERNAME="your_username"     # Nom d'utilisateur MQTT
+export MQTT_PASSWORD="your_password"     # Mot de passe MQTT
 ```
 
 **Option B - Fichier .env (recommandé)** :
@@ -76,15 +76,22 @@ cp .env.example .env
 
 2. Éditez `.env` avec vos identifiants réels :
 ```bash
-MQTT_BROKER=192.168.1.42
+MQTT_BROKER=your.broker.ip
 MQTT_PORT=1883
-MQTT_USERNAME=admin
-MQTT_PASSWORD=votre_mot_de_passe
+MQTT_USERNAME=your_username
+MQTT_PASSWORD=your_secure_password
 ```
 
 3. Chargez les variables et lancez le script :
 ```bash
-export $(cat .env | xargs) && python AlertePollens_Img_v1.5-MQTT.py
+# Option sécurisée avec set
+set -a
+source .env
+set +a
+python AlertePollens_Img_v1.5-MQTT.py
+
+# Ou utilisez python-dotenv (recommandé pour la production)
+# pip install python-dotenv
 ```
 
 **Note**: Le fichier `.env` est automatiquement ignoré par Git pour protéger vos identifiants.
@@ -171,10 +178,10 @@ After=network.target
 Type=simple
 User=votre_utilisateur
 WorkingDirectory=/chemin/vers/AlertePollens
-Environment="MQTT_BROKER=192.168.1.42"
+Environment="MQTT_BROKER=your.broker.ip"
 Environment="MQTT_PORT=1883"
-Environment="MQTT_USERNAME=admin"
-Environment="MQTT_PASSWORD=votre_mot_de_passe"
+Environment="MQTT_USERNAME=your_username"
+Environment="MQTT_PASSWORD=your_secure_password"
 ExecStart=/usr/bin/python3 AlertePollens_Img_v1.5-MQTT.py
 Restart=always
 
