@@ -8,7 +8,7 @@
 
 ## 📋 Description
 
-**AlertePollens** est un script Python qui télécharge et analyse automatiquement les cartes de vigilance pollinique depuis [pollens.fr](https://www.pollens.fr). Il détecte les niveaux d'alerte par reconnaissance de couleur et publie les données via MQTT pour une intégration facile avec des systèmes domotiques (Home Assistant, Jeedom, etc.).
+**AlertePollens** est un **projet personnel** développé sous licence MIT. Ce script Python télécharge et analyse automatiquement les cartes de vigilance pollinique depuis [pollens.fr](https://www.pollens.fr). Il détecte les niveaux d'alerte par reconnaissance de couleur et publie les données via MQTT pour une intégration facile avec des systèmes domotiques (Home Assistant, Jeedom, etc.).
 
 ### Cartes analysées
 
@@ -214,7 +214,7 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 
 ## 📄 License
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet personnel est distribué sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ## 🙏 Remerciements
 
