@@ -274,10 +274,10 @@ Utilisez le plugin MQTT pour créer des équipements avec les topics ci-dessus.
 Créez un fichier `.env` (non commité) contenant vos identifiants :
 
 ```bash
-MQTT_BROKER=votre_broker_ip
+MQTT_BROKER=your.broker.ip
 MQTT_PORT=1883
-MQTT_USERNAME=votre_username
-MQTT_PASSWORD=votre_password_securise
+MQTT_USERNAME=your_username
+MQTT_PASSWORD=your_secure_password
 ```
 
 Le script chargera automatiquement ces variables d'environnement.
